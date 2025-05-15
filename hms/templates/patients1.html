@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 200px;
+            float: left;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .alert {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error('JavaScript error:', message, 'at', source, 'line', lineno);
+        };
+    </script>
+</head>
+<body>
+    <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
+    <div class="sidebar">
+        <h2>Patients</h2>
+        <ul>
+            <li><a href="{{ url_for('patients') }}">All Patients</a></li>
+            <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+            <li><a href="{{ url_for('scheduled_count') }}">Scheduled Patient Count</a></li>
+            <li><a href="{{ url_for('appointment_history') }}">Patient Appointment History</a></li>
+            <li><a href="{{ url_for('appointment_details') }}">Appointment Details</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Welcome to Patient Management</h1>
+        {% if patients %}
+            <table>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                </tr>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.patientID }}</td>
+                    <td>{{ patient.patientName }}</td>
+                    <td>{{ patient.DOB }}</td>
+                    <td>{{ patient.Contact }}</td>
+                    <td>{{ patient.Email }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No patients found.</p>
+        {% endif %}
+    </div>
+    <script>
+        console.log('About to load patients.js');
+    </script>
+    <script src="{{ url_for('static', filename='js/patients.js') }}" onerror="console.error('Failed to load patients.js')"></script>
+    <script>
+        console.log('Finished loading patients.js');
+    </script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

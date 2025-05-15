@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resources Overview</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #2980b9;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        button {
+            background-color: #2980b9;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #1f6391;
+        }
+    </style>
+    <script src="static/js/resources.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Resources Overview</h1>
+
+        <!-- Form for adding/editing data -->
+        <form id="dataForm" style="display: none;">
+            <!-- Dynamic fields will be inserted here -->
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>Resources</h2>
+        <button onclick="addData('resourcesTable')">Add Resource</button>
+        <button onclick="editData('resourcesTable')">Edit Resource</button>
+        <table id="resourcesTable">
+            <thead>
+                <tr>
+                    <th>Resource ID</th>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                    <tr>
+                        <td>{{ resource.resource_id }}</td>
+                        <td>{{ resource.resource_type }}</td>
+                        <td>{{ resource.resource_name }}</td>
+                        <td>{{ resource.status }}</td>
+                        <td>{{ resource.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Equipment</h2>
+        <button onclick="addData('equipmentTable')">Add Equipment</button>
+        <button onclick="editData('equipmentTable')">Edit Equipment</button>
+        <table id="equipmentTable">
+            <thead>
+                <tr>
+                    <th>Equipment ID</th>
+                    <th>Name</th>
+                    <th>Purchase Date</th>
+                    <th>Warranty End Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in equipment %}
+                    <tr>
+                        <td>{{ item.equipment_id }}</td>
+                        <td>{{ item.equipment_name }}</td>
+                        <td>{{ item.purchase_date }}</td>
+                        <td>{{ item.warranty_end_date }}</td>
+                        <td>{{ item.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Rooms</h2>
+        <button onclick="addData('roomsTable')">Add Room</button>
+        <button onclick="editData('roomsTable')">Edit Room</button>
+        <table id="roomsTable">
+            <thead>
+                <tr>
+                    <th>Room ID</th>
+                    <th>Type</th>
+                    <th>Bed Count</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                    <tr>
+                        <td>{{ room.room_id }}</td>
+                        <td>{{ room.room_type }}</td>
+                        <td>{{ room.bed_count }}</td>
+                        <td>{{ room.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Supplies</h2>
+        <button onclick="addData('suppliesTable')">Add Supply</button>
+        <button onclick="editData('suppliesTable')">Edit Supply</button>
+        <table id="suppliesTable">
+            <thead>
+                <tr>
+                    <th>Supply ID</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Last Restock Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supply in supplies %}
+                    <tr>
+                        <td>{{ supply.supply_id }}</td>
+                        <td>{{ supply.supply_name }}</td>
+                        <td>{{ supply.quantity }}</td>
+                        <td>{{ supply.unit }}</td>
+                        <td>{{ supply.last_restock_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Staff Assignments</h2>
+        <button onclick="addData('staffAssignmentsTable')">Add Assignment</button>
+        <button onclick="editData('staffAssignmentsTable')">Edit Assignment</button>
+        <table id="staffAssignmentsTable">
+            <thead>
+                <tr>
+                    <th>Assignment ID</th>
+                    <th>Staff ID</th>
+                    <th>Resource ID</th>
+                    <th>Assigned On</th>
+                    <th>Shift Start</th>
+                    <th>Shift End</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for assignment in staff_assignments %}
+                    <tr>
+                        <td>{{ assignment.assignment_id }}</td>
+                        <td>{{ assignment.staffID }}</td>
+                        <td>{{ assignment.resource_id }}</td>
+                        <td>{{ assignment.assigned_on }}</td>
+                        <td>{{ assignment.shift_start_time }}</td>
+                        <td>{{ assignment.shift_end_time }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Resource Usage</h2>
+        <button onclick="addData('resourceUsageTable')">Add Usage</button>
+        <button onclick="editData('resourceUsageTable')">Edit Usage</button>
+        <table id="resourceUsageTable">
+            <thead>
+                <tr>
+                    <th>Usage ID</th>
+                    <th>Resource ID</th>
+                    <th>Used By</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usage in resource_usage %}
+                    <tr>
+                        <td>{{ usage.usage_id }}</td>
+                        <td>{{ usage.resource_id }}</td>
+                        <td>{{ usage.used_by }}</td>
+                        <td>{{ usage.start_time }}</td>
+                        <td>{{ usage.end_time }}</td>
+                        <td>{{ usage.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Resource Maintenance</h2>
+        <button onclick="addData('resourceMaintenanceTable')">Add Maintenance</button>
+        <button onclick="editData('resourceMaintenanceTable')">Edit Maintenance</button>
+        <table id="resourceMaintenanceTable">
+            <thead>
+                <tr>
+                    <th>Maintenance ID</th>
+                    <th>Resource ID</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Next Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for maintenance in resource_maintenance %}
+                    <tr>
+                        <td>{{ maintenance.maintenance_id }}</td>
+                        <td>{{ maintenance.resource_id }}</td>
+                        <td>{{ maintenance.maintenance_type }}</td>
+                        <td>{{ maintenance.maintenance_date }}</td>
+                        <td>{{ maintenance.next_maintenance_due }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Resource Requests</h2>
+        <button onclick="addData('resourceRequestsTable')">Add Request</button>
+        <button onclick="editData('resourceRequestsTable')">Edit Request</button>
+        <table id="resourceRequestsTable">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Requested By</th>
+                    <th>Resource ID</th>
+                    <th>Request Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in resource_requests %}
+                    <tr>
+                        <td>{{ request.request_id }}</td>
+                        <td>{{ request.requested_by }}</td>
+                        <td>{{ request.resource_id }}</td>
+                        <td>{{ request.request_date }}</td>
+                        <td>{{ request.status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

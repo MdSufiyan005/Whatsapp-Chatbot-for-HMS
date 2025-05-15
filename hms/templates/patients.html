@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Reset styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 220px;
+            position: fixed; /* Fixed sidebar throughout the page */
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px;
+            height: 100vh; /* Full height */
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #4682b4;
+            transform: translateX(5px); /* Slight movement to the right on hover */
+        }
+
+        /* Active link styling */
+        .sidebar ul li a.active {
+            background-color: #104e8b; /* Darker blue to show active state */
+            font-weight: bold;
+            transform: none; /* No movement for active link */
+        }
+
+        /* Content styles */
+        .content {
+            margin-left: 240px; /* Adjusted for sidebar width */
+            padding: 40px;
+            background-color: #f4f7f6;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: separate; /* Separate borders for rounded corners */
+            border-spacing: 0 15px; /* Add space between rows */
+            font-size: 18px;
+        }
+
+        table th, table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            background-color: #fff; /* White background */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        table th {
+            background-color: #1e90ff;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        table td {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        table tr:hover td {
+            background-color: #f2f2f2;
+        }
+
+        /* Hover effects */
+        table th, table td {
+            transition: background-color 0.3s ease;
+        }
+
+        table th:hover, table td:hover {
+            background-color: #d3d3d3;
+        }
+    </style>
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error('JavaScript error:', message, 'at', source, 'line', lineno);
+        };
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Patients</h2>
+        <ul>
+            <li><a href="{{ url_for('patients') }}" class="{{ 'active' if endpoint == 'patients' }}">All Patients</a></li>
+            <li><a href="{{ url_for('add_patient') }}" class="{{ 'active' if endpoint == 'add_patient' }}">Add Patient</a></li>
+            <li><a href="{{ url_for('update_patient') }}" class="{{ 'active' if endpoint == 'update_patient' }}">Update Patient Details</a></li>
+            <li><a href="{{ url_for('appointment_details') }}" class="{{ 'active' if endpoint == 'appointment_details' }}">Appointment Details</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Welcome to Patient Management</h1>
+        {% if patients %}
+            <table>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                </tr>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.patientID }}</td>
+                    <td>{{ patient.patientName }}</td>
+                    <td>{{ patient.DOB }}</td>
+                    <td>{{ patient.Contact }}</td>
+                    <td>{{ patient.Email }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No patients found.</p>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
+</body>
+</html>

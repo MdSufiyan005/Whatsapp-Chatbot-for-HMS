@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allocate Resources</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #008CBA; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #008CBA;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Patient Resources</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Resource ID</th>
+                <th>Patient ID</th>
+                <th>Patient Name</th>
+                <th>Resource Type</th>
+                <th>Department Name</th>
+                <th>Resource Name</th>
+                <th>Status</th>
+                <th>Quantity</th>
+                <th>Request Date</th>
+                <th>Returned Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in patients_resources %}
+            <tr>
+                <td>{{ p.resource_id }}</td>
+                <td>{{ p.patientID }}</td>
+                <td>{{ p.patientName }}</td>
+                <td>{{ p.patient_resource_type }}</td>
+                <td>{{ p.dept_name }}</td>
+                <td>{{ p.resource_name }}</td>
+                <td>{{ p.status }}</td>
+                <td>{{ p.quantity }}</td>
+                <td>{{ p.request_date }}</td>
+                <td>{{ p.returned_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<h2>Allocate Resources</h2>
+
+<form id="allocateForm">
+    <h3>Allocate Resources</h3>
+    <label for="patientId">Patient ID:</label>
+    <input type="text" id="patientId" name="patientId" required>
+
+    <label for="resourceType">Resource ID:</label>
+    <input type="text" id="resourceType" name="resourceType" required>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" required>
+
+    <label for="requestDate">Request Date:</label>
+    <input type="date" id="requestDate" name="requestDate" required>
+
+    <button type="submit">Allocate Resource</button>
+</form>
+
+<form id="returnForm">
+    <h3>Return Resources</h3>
+    <label for="returnPatientId">Patient ID:</label>
+    <input type="text" id="returnPatientId" name="returnPatientId" required>
+
+    <label for="returnResourceType">Resource ID:</label>
+    <input type="text" id="returnResourceType" name="returnResourceType" required>
+
+    <label for="returnQuantity">Quantity:</label>
+    <input type="number" id="returnQuantity" name="returnQuantity" required>
+
+    <label for="returnDate">Return Date:</label>
+    <input type="date" id="returnDate" name="returnDate" required>
+
+    <button type="submit">Return Resource</button>
+</form>
+
+<script src="allocate_resources.js"></script>
+<div class="back-button">
+    <a href="{{ url_for('staff_dashboard') }}">
+        <button type="button">Back to Dashboard</button>
+    </a>
+</div>
+
+<style>
+    .back-button {
+        margin-top: 20px; 
+    }
+    .back-button button {
+        padding: 10px 20px;
+        background-color: #007BFF; 
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .back-button button:hover {
+        background-color: #0056b3; 
+    }
+</style>
+</body>
+</html>

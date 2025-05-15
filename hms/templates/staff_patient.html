@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Table</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        button {
+            background-color: #0056b3; 
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1>Patient table</h1>
+    {% if patients_resources %}
+        <table>
+            <tr>
+                <th>Patient ID</th>
+                <th>Name</th>
+                <th>AppointmentID</th>
+                <th>Department</th>
+                <th>Resource type</th>
+                <th>Quantity</th>
+                <th>Status</th>
+                <th>Request date</th>
+                <th>Return date</th>
+            </tr>
+            {% for patient in patients_resources %}
+            <tr>
+                <td>{{ patients_resources.patientID }}</td>
+                <td>{{ patients_resources.patientName }}</td>
+                <td>{{ patients_resources.appointmentID }}</td>
+                <td>{{ patients_resources.dept_name }}</td>
+                <td>{{ patients_resources.patient_resource_type }}</td>
+                <td>{{ patients_resources.quantity }}</td>
+                <td>{{ patients_resources.status }}</td>
+                <td>{{ patients_resources.request_date }}</td>
+                <td>{{ patients_resources.returned_date }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No patients found.</p>
+    {% endif %}
+</div>
+
+<button onclick="window.location.href='allocatereturn_resources.html'">Allocate/Return Resources</button>
+<div class="back-button">
+    <a href="staff_dashboard.html">
+        <button type="button">Back to Dashboard</button>
+    </a>
+</div>
+
+<style>
+    .back-button {
+        margin-top: 20px; 
+    }
+    .back-button button {
+        padding: 10px 20px;
+        background-color: #007BFF; 
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .back-button button:hover {
+        background-color: #0056b3; 
+    }
+</style>
+</body>
+</html>

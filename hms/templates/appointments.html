@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/appointments.js') }}" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Inline styles for quick adjustments */
+        body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb; /* Light background */
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+h1, h2 {
+    color: #2c3e50;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+form:hover {
+    background-color: #f0f8ff; /* Light blue background on hover */
+    transform: translateY(-5px);
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd1d9;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #f9fafb;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="tel"]:focus {
+    border-color: #3498db;
+    background-color: #eaf6ff; /* Slight color change on focus */
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #3498db, #2980b9); /* Gradient background */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #2980b9, #1f6391); /* Darker gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Shadow on hover */
+    transform: translateY(-2px); /* Lift on hover */
+}
+
+button:active {
+    background: linear-gradient(135deg, #1f6391, #14507b); /* Color change on click */
+    transform: translateY(0); /* Reset lift effect on click */
+}
+
+#appointmentList {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#appointmentList li {
+    background-color: #fff;
+    margin-bottom: 12px;
+    padding: 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#appointmentList li:hover {
+    background-color: #e0f7fa; /* Light teal background on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+.button-container {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d); /* Gradient background */
+    color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #7f8c8d, #707b7c); /* Darker gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Shadow on hover */
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    background: linear-gradient(135deg, #707b7c, #616d70); /* Color change on click */
+    transform: translateY(0); /* Reset lift effect on click */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Appointments</h1>
+        
+        <!-- Add a search bar for patient appointments -->
+        <form id="searchForm" method="GET" action="{{ url_for('appointments') }}">
+            <div>
+                <label for="searchQuery">Search Appointments:</label>
+                <input type="text" name="search_query" id="searchQuery" placeholder="Enter patient name or ID" required>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+        
+        <form id="appointmentForm" method="POST" action="{{ url_for('appointments') }}">
+            <div>
+                <label for="patientId">Patient ID:</label>
+                <input type="text" name="patient_id" id="patientId" required>
+            </div>
+            <div>
+                <label for="doctorId">Doctor ID:</label>
+                <input type="text" name="doctor_id" id="doctorId" required>
+            </div>
+            <div>
+                <label for="dept_name">Department:</label>
+                <input type="text" name="dept_name" id="dept_name">
+            </div>
+            <div>
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" name="phone_number" id="phoneNumber" required pattern="[0-9]{10}" placeholder="1234567890">
+            </div>
+            <div>
+                <label for="appointmentDate">Date:</label>
+                <input type="date" name="appointment_date" id="appointmentDate" required>
+            </div>
+            <div>
+                <label for="appointmentTime">Time:</label>
+                <input type="time" name="appointment_time" id="appointmentTime" required>
+            </div>
+            <button type="submit">Schedule Appointment</button>
+        </form>
+        
+        <h2>Appointment List</h2>
+        <ul id="appointmentList">
+        {% if appointments %}
+            {% for appointment in appointments %}
+                <li>
+                    <strong>{{ appointment.patient_name }}</strong> with Dr. {{ appointment.doctor_name }}<br>
+                    Date: {{ appointment.appointment_date }} at {{ appointment.appointment_time }}<br>
+                    Phone: {{ appointment.phone_number }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No appointments found.</li>
+        {% endif %}
+        </ul>
+    </div>
+</body>
+</html>

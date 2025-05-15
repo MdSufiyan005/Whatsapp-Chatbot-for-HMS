@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <ul>
+        <li><a href="/patients">View Patient Details</a></li>
+        <li><a href="/scheduled_count">Scheduled Patient Count</a></li>
+        <li><a href="/appointment_history">Patient Appointment History</a></li>
+        <li><a href="/appointment_details">Appointment Details</a></li>
+        <!-- Add more links as needed -->
+    </ul>
+</body>
+</html>

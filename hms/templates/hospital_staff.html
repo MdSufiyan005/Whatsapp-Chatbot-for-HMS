@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Staff Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Reset styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 220px;
+            position: fixed;
+            background-color: #1e90ff;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #4682b4;
+        }
+
+        /* Content styles */
+        .content {
+            margin-left: 240px;
+            padding: 40px;
+            background-color: #f4f7f6;
+        }
+
+        .content h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Form styles */
+        form {
+            margin-bottom: 40px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        form input, form select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        form button {
+            padding: 10px 20px;
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form button:hover {
+            background-color: #4682b4;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+            font-size: 18px;
+        }
+
+        table th, table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table th {
+            background-color: #1e90ff;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        table td {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        table tr:hover td {
+            background-color: #f2f2f2;
+        }
+
+        /* Hover effects */
+        table th, table td {
+            transition: background-color 0.3s ease;
+        }
+
+        table th:hover, table td:hover {
+            background-color: #d3d3d3;
+        }
+
+        /* Search box styles */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error('JavaScript error:', message, 'at', source, 'line', lineno);
+        };
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Hospital Staff</h2>
+        <ul>
+            <li><a href="#">All Staff</a></li>
+            <li><a href="#">Add Staff</a></li>
+            <li><a href="#">Update Staff Details</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>Manage Hospital Staff</h1>
+
+        <!-- Add Staff Form -->
+        <form id="add-staff-form">
+            <h2>Add Staff Member</h2>
+            <input type="text" name="staff_name" placeholder="Staff Name" required>
+            <input type="text" name="staff_position" placeholder="Position" required>
+            <input type="text" name="staff_contact" placeholder="Contact Number" required>
+            <input type="email" name="staff_email" placeholder="Email" required>
+            <button type="submit">Add Staff</button>
+        </form>
+
+        <!-- Search Staff -->
+        <div class="search-box">
+            <input type="text" id="searchStaff" placeholder="Search Staff by Name or Position">
+        </div>
+
+        <!-- Staff List -->
+        <table id="staff-table">
+            <thead>
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff_member in staff %}
+                <tr>
+                    <td>{{ staff_member.staffID }}</td>
+                    <td>{{ staff_member.name }}</td>
+                    <td>{{ staff_member.position }}</td>
+                    <td>{{ staff_member.contact }}</td>
+                    <td>{{ staff_member.email }}</td>
+                    <td>
+                        <button onclick="editStaf({{ staff_member.staffID|tojson|safe }})">Edit</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Add staff form submission
+            $('#add-staff-form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '{{ url_for("hospital_staff") }}',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        alert('Staff member added successfully!');
+                        location.reload();
+                    },
+                    error: function(error) {
+                        alert('Error adding staff member');
+                    }
+                });
+            });
+
+            // Search staff
+            $('#searchStaff').keyup(function() {
+                var query = $(this).val();
+                $.ajax({
+                    url: '{{ url_for("search_staff") }}',
+                    method: 'GET',
+                    data: { query: query },
+                    success: function(response) {
+                        updateStaffTable(response);
+                    },
+                    error: function(error) {
+                        console.error('Error searching staff:', error);
+                    }
+                });
+            });
+        });
+
+        function updateStaffTable(staff) {
+            var tbody = $('#staff-table tbody');
+            tbody.empty();
+            staff.forEach(function(member) {
+                tbody.append(
+                    '<tr>' +
+                        '<td>' + (member.staffID || '') + '</td>' +
+                        '<td>' + (member.name || '') + '</td>' +
+                        '<td>' + (member.position || '') + '</td>' +
+                        '<td>' + (member.contact || '') + '</td>' +
+                        '<td>' + (member.email || '') + '</td>' +
+                        '<td>' +
+                            '<button onclick="editStaf(' + (member.staffID || 0) + ')">Edit</button>' +
+                        '</td>' +
+                    '</tr>'
+                );
+            });
+        }
+
+        function editStaff(staffId) {
+            // Implement edit functionality
+            // You can open a modal or redirect to an edit page
+            alert('Edit staff member with ID: ' + staffId);
+        }
+    </script>
+</body>
+</html>

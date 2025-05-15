@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .medical-records {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #f1f3f5;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #28a745;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medical Records for Patient: <span id="currentPatientName"></span> (ID: <span id="currentPatientId"></span>)</h1>
+        
+        <!-- Form to Add New Medical Record -->
+        <div class="form-container">
+            <h2>Add New Medical Record</h2>
+            <form id="medicalRecordForm">
+                <input type="hidden" id="patientID" value="">
+                <label for="doctorID">Doctor ID:</label>
+                <input type="text" id="doctorID" required>
+                
+                <label for="consultationDate">Consultation Date:</label>
+                <input type="date" id="consultationDate" required>
+                
+                <label for="department">Department:</label>
+                <input type="text" id="department" required>
+                
+                <label for="diagnosis">Diagnosis:</label>
+                <textarea id="diagnosis" rows="4" required></textarea>
+                
+                <label for="treatment">Treatment:</label>
+                <textarea id="treatment" rows="4" required></textarea>
+                
+                <label for="prescription">Prescription (optional):</label>
+                <textarea id="prescription" rows="4"></textarea>
+                
+                <button type="submit">Add Medical Record</button>
+            </form>
+        </div>
+
+        <!-- Display Medical Records -->
+        <div class="medical-records">
+            <h2>Current Medical Records</h2>
+            <table id="recordsTable">
+                <thead>
+                    <tr>
+                        <th>Record ID</th>
+                        <th>Doctor ID</th>
+                        <th>Consultation Date</th>
+                        <th>Department</th>
+                        <th>Diagnosis</th>
+                        <th>Treatment</th>
+                        <th>Prescription</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in medical_records_H1 %}
+                    <tr>
+                        <td>{{ m.recordID }}</td>
+                        <td>{{ m.doctorID }}</td>
+                        <td>{{ m.consultationDate }}</td>
+                        <td>{{ m.department }}</td>
+                        <td>{{ m.diagnosis }}</td>
+                        <td>{{ m.treatment }}</td>
+                        <td>{{ m.prescription }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/medical_records.js') }}"></script>
+</body>
+</html>

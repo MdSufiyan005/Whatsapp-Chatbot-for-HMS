@@ -1,0 +1,550 @@
+show tables;
+create database if not exists hospital;
+use hospital;
+create table patients (
+    patientID INT PRIMARY KEY,
+    patientName VARCHAR(30),
+    DOB DATE NOT NULL,
+    Contact INT NOT NULL,
+    Email VARCHAR(30) UNIQUE
+);
+INSERT INTO patients
+VALUES (
+        1,
+        'John Doe',
+        '1985-06-15',
+        '5551234567',
+        'jdoe@example.com'
+    ),
+    (
+        2,
+        'Jane Smith',
+        '1990-11-23',
+        '5559876543',
+        'jsmith@example.com'
+    ),
+    (
+        3,
+        'Alice Johnson',
+        '1978-03-30',
+        '5554567890',
+        'ajohnson@example.com'
+    ),
+    (
+        4,
+        'Bob Brown',
+        '2000-01-05',
+        '5553210987',
+        'bbrown@example.com'
+    ),
+    (
+        5,
+        'Emily Davis',
+        '1995-07-19',
+        '5556543210',
+        'edavis@example.com'
+    ),
+    (
+        6,
+        'Michael Wilson',
+        '1982-09-12',
+        '5552345678',
+        'mwilson@example.com'
+    ),
+    (
+        7,
+        'Sarah Taylor',
+        '1975-04-22',
+        '5558765432',
+        'staylor@example.com'
+    ),
+    (
+        8,
+        'David Martinez',
+        '1992-08-14',
+        '5553456789',
+        'dmartinez@example.com'
+    ),
+    (
+        9,
+        'Laura Garcia',
+        '1988-12-30',
+        '5554567891',
+        'lgarcia@example.com'
+    ),
+    (
+        10,
+        'James Lee',
+        '1991-10-05',
+        '5555678901',
+        'jlee@example.com'
+    ),
+    (
+        11,
+        'Patricia Rodriguez',
+        '1980-03-18',
+        '5556789012',
+        'prodriguez@example.com'
+    ),
+    (
+        12,
+        'Robert Hernandez',
+        '1965-02-25',
+        '5557890123',
+        'rhernandez@example.com'
+    ),
+    (
+        13,
+        'Jennifer Clark',
+        '1994-07-11',
+        '5558901234',
+        'jclark@example.com'
+    ),
+    (
+        14,
+        'Charles Lewis',
+        '1983-05-09',
+        '5559012345',
+        'clewis@example.com'
+    ),
+    (
+        15,
+        'Elizabeth Walker',
+        '1979-01-20',
+        '5550123456',
+        'ewalker@example.com'
+    ),
+    (
+        16,
+        'Daniel Hall',
+        '1986-11-17',
+        '5551234568',
+        'dhall@example.com'
+    ),
+    (
+        17,
+        'Jessica Allen',
+        '1993-06-29',
+        '5552345679',
+        'jallen@example.com'
+    ),
+    (
+        18,
+        'Matthew Young',
+        '1987-03-15',
+        '5553456780',
+        'myoung@example.com'
+    ),
+    (
+        19,
+        'Nancy King',
+        '1972-08-02',
+        '5554567892',
+        'nking@example.com'
+    ),
+    (
+        20,
+        'Joshua Wright',
+        '1995-12-27',
+        '5555678902',
+        'jwright@example.com'
+    ),
+    (
+        21,
+        'Sophia Scott',
+        '2001-04-14',
+        '5556789013',
+        'sscott@example.com'
+    ),
+    (
+        22,
+        'Andrew Green',
+        '1984-10-21',
+        '5557890124',
+        'agreen@example.com'
+    ),
+    (
+        23,
+        'Megan Adams',
+        '1996-09-09',
+        '5558901235',
+        'madams@example.com'
+    ),
+    (
+        24,
+        'Ryan Baker',
+        '1981-07-04',
+        '5559012346',
+        'rbaker@example.com'
+    ),
+    (
+        25,
+        'Hannah Gonzalez',
+        '1990-02-12',
+        '5550123457',
+        'hgonzalez@example.com'
+    ),
+    (
+        26,
+        'Ethan Nelson',
+        '1977-05-30',
+        '5551234569',
+        'enelson@example.com'
+    ),
+    (
+        27,
+        'Isabella Carter',
+        '2003-01-01',
+        '5552345680',
+        'icarter@example.com'
+    ),
+    (
+        28,
+        'Alexander Mitchell',
+        '1989-03-31',
+        '5553456791',
+        'amitchell@example.com'
+    ),
+    (
+        29,
+        'Ava Perez',
+        '1998-06-23',
+        '5554567802',
+        'aperez@example.com'
+    ),
+    (
+        30,
+        'Christopher Roberts',
+        '1968-11-11',
+        '5555678913',
+        'croberts@example.com'
+    );
+alter table patients
+modify column Contact VARCHAR(10);
+select *
+from patients;
+create table hospital_staff (
+    staffID int primary key,
+    staffName varchar(30),
+    staff_role varchar(20),
+    userName varchar(30),
+    staffPassword varchar(30),
+    Contact varchar(10),
+    email varchar(40)
+);
+insert into hospital_staff
+values (
+        1,
+        'John Smith',
+        'Doctor',
+        'jsmith',
+        'password123',
+        '5551234567',
+        'john.smith@example.com'
+    ),
+    (
+        2,
+        'Emily Johnson',
+        'Nurse',
+        'ejohnson',
+        'nurse456',
+        '5552345678',
+        'emily.j@example.com'
+    ),
+    (
+        3,
+        'Michael Brown',
+        'Administrator',
+        'mbrown',
+        'admin789',
+        '5553456789',
+        'michael.b@example.com'
+    ),
+    (
+        4,
+        'Sarah Davis',
+        'Technician',
+        'sdavis',
+        'tech1234',
+        '5554567890',
+        'sarah.d@example.com'
+    ),
+    (
+        5,
+        'David Wilson',
+        'Surgeon',
+        'dwilson',
+        'surg5678',
+        '5555678901',
+        'david.w@example.com'
+    ),
+    (
+        6,
+        'Laura Garcia',
+        'Pharmacist',
+        'lgarcia',
+        'pharm2345',
+        '5556789012',
+        'laura.g@example.com'
+    ),
+    (
+        7,
+        'James Martinez',
+        'Receptionist',
+        'jmartinez',
+        'recp1234',
+        '5557890123',
+        'james.m@example.com'
+    ),
+    (
+        8,
+        'Patricia Rodriguez',
+        'Nurse Manager',
+        'prodriguez',
+        'nurse7890',
+        '5558901234',
+        'patricia.r@example.com'
+    ),
+    (
+        9,
+        'Robert Hernandez',
+        'Physical Therapist',
+        'rhernandez',
+        'physio5678',
+        '5559012345',
+        'robert.h@example.com'
+    ),
+    (
+        10,
+        'Jennifer Clark',
+        'Radiologist',
+        'jclark',
+        'radio1234',
+        '5550123456',
+        'jennifer.c@example.com'
+    );
+select *
+from hospital_staff;
+create table doctors(
+    doctorID varchar(20) primary key,
+    doctorName varchar(20) not null,
+    specialization varchar(100) not null,
+    qualifications varchar(200),
+    experience int
+);
+insert into doctors
+values (
+        'H1DOC01',
+        'Vinesh Kumar',
+        'Neurology',
+        'MBBS Degree,Nueral Surgoen,Psychologist',
+        20
+    );
+insert into doctors
+values (
+        'H1DOC02',
+        'Aisha Khan',
+        'Cardiology',
+        'MBBS, MD, Cardiologist',
+        15
+    ),
+    (
+        'H1DOC03',
+        'Rajesh Mehra',
+        'Orthopedics',
+        'MBBS, MS, Orthopedic Surgeon',
+        12
+    ),
+    (
+        'H1DOC04',
+        'Sarah Ahmed',
+        'Pediatrics',
+        'MBBS, MD, Pediatrician',
+        10
+    ),
+    (
+        'H1DOC05',
+        'John Smith',
+        'Dermatology',
+        'MBBS, MD, Dermatologist',
+        8
+    ),
+    (
+        'H1DOC06',
+        'Priya Patel',
+        'Ophthalmology',
+        'MBBS, MD, Ophthalmologist',
+        14
+    ),
+    (
+        'H1DOC07',
+        'Daniel Roy',
+        'General Surgery',
+        'MBBS, MS, General Surgeon',
+        18
+    ),
+    (
+        'H1DOC08',
+        'Meena Kapoor',
+        'Psychiatry',
+        'MBBS, MD, Psychiatrist',
+        22
+    ),
+    (
+        'H1DOC09',
+        'Aditya Verma',
+        'Gastroenterology',
+        'MBBS, MD, Gastroenterologist',
+        16
+    ),
+    (
+        'H1DOC10',
+        'Sana Malik',
+        'Nephrology',
+        'MBBS, MD, Nephrologist',
+        9
+    ),
+    (
+        'H1DOC11',
+        'Henry Lee',
+        'Endocrinology',
+        'MBBS, MD, Endocrinologist',
+        11
+    );
+select *
+from doctors;
+create table medical_records (
+    recordID int primary key,
+    patientID int not null,
+    doctorID varchar(30) not null,
+    consultationDate date,
+    diagnosis text,
+    treatment text,
+    foreign key (patientID) references patients(patientID),
+    foreign key (doctorID) references doctors(doctorID)
+);
+alter table medical_records
+add column prescription blob;
+desc medical_records;
+insert into medical_records (
+        recordID,
+        patientID,
+        doctorID,
+        consultationDate,
+        diagnosis,
+        treatment,
+        prescription
+    )
+values
+insert into medical_records (
+        recordID,
+        patientID,
+        doctorID,
+        consultationDate,
+        diagnosis,
+        treatment
+    )
+values (
+        101,
+        1,
+        'H1DOC01',
+        '2024-09-15',
+        'Migraine',
+        'Prescribed medication and rest'
+    ),
+    (
+        102,
+        2,
+        'H1DOC02',
+        '2024-09-16',
+        'Chest Pain',
+        'Consultation with cardiologist, ECG conducted'
+    ),
+    (
+        103,
+        3,
+        'H1DOC03',
+        '2024-09-17',
+        'Fractured Leg',
+        'Surgery performed, leg in plaster cast'
+    ),
+    (
+        104,
+        4,
+        'H1DOC04',
+        '2024-09-18',
+        'Fever and Cough',
+        'Prescribed antibiotics, bed rest advised'
+    ),
+    (
+        105,
+        5,
+        'H1DOC05',
+        '2024-09-19',
+        'Skin Rash',
+        'Applied topical ointment, oral antihistamines'
+    ),
+    (
+        106,
+        6,
+        'H1DOC06',
+        '2024-09-20',
+        'Vision Issues',
+        'Corrective glasses prescribed'
+    ),
+    (
+        107,
+        7,
+        'H1DOC07',
+        '2024-09-21',
+        'Appendicitis',
+        'Appendectomy surgery performed, follow-up needed'
+    ),
+    (
+        108,
+        8,
+        'H1DOC08',
+        '2024-09-22',
+        'Depression',
+        'Antidepressants prescribed, therapy recommended'
+    ),
+    (
+        109,
+        9,
+        'H1DOC09',
+        '2024-09-23',
+        'Gastric Ulcers',
+        'Endoscopy performed, proton pump inhibitors prescribed'
+    ),
+    (
+        110,
+        10,
+        'H1DOC10',
+        '2024-09-24',
+        'Kidney Stones',
+        'Pain management, hydration, surgery scheduled'
+    );
+select *
+from medical_records;
+/* insertion of image into the db 
+ insert into medical_records(prescription) values (load_file("C:\Users\Wayne\Downloads\gradient-prescription-template.zip"));
+ */
+update medical_records
+set prescription = load_file(
+        "C:\Users\Wayne\Downloads\v4-460px-Read-a-Doctor's-Prescription-Step-1-Version-5.jpg.jpeg"
+    )
+where recordID = 101;
+select *
+from medical_records;
+ALTER USER 'root' @'localhost' IDENTIFIED WITH mysql_native_password BY 'j0shu@7584';
+GRANT ALL PRIVILEGES ON.TO 'root' @ '%' IDENTIFIED BY 'j0shu@7584' WITH
+GRANT OPTION;
+FLUSH PRIVILEGES;
+SELECT user,
+    host
+FROM mysql.user
+WHERE user = 'root';
+CREATE USER 'root1' @'%' IDENTIFIED BY 'j0shu@7584';
+GRANT ALL PRIVILEGES ON.TO 'root1' @'%' WITH
+GRANT OPTION;
+FLUSH PRIVILEGES;

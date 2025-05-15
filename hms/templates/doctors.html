@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .doctor-management {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .doctor-form, .doctor-list {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .doctor-form {
+            width: 40%;
+        }
+        .doctor-list {
+            width: 55%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"] {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .doctor-item {
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .doctor-item:hover {
+            background-color: #e9ecef;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        #search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        #search-button {
+            width: 25%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Doctors Management</h1>
+        <div class="doctor-management">
+            <div class="doctor-form">
+                <h2>Add New Doctor</h2>
+                <form id="add-doctor-form" method="POST" action="/add_doctor">
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="specialty" placeholder="Specialty" required>
+                    <input type="text" name="qualifications" placeholder="Qualifications" required>
+                    <button type="submit">Add Doctor</button>
+                </form>
+            </div>
+            <div class="doctor-list">
+                <h2>Doctor List</h2>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search doctors...">
+                    <button id="search-button">Search</button>
+                </div>
+                <ul id="doctor-list">
+                    {% for doctor in doctors %}
+                        <li class="doctor-item">
+                            <strong>{{ doctor.doctorName }}</strong><br>
+                            Specialty: {{ doctor.specialty }}<br>
+                            Qualifications: {{ doctor.qualifications }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/correct_filename.js') }}"></script>
+</body>
+</html>

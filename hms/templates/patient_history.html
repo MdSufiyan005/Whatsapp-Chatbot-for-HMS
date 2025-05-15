@@ -1,0 +1,201 @@
+<!-- templates/patient_history.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History</title>
+    <script src="{{ url_for('static', filename='js/patient_history.js') }}" defer></script>
+    <style>
+        /* static/css/styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9; /* Light background for better contrast */
+        }
+        .container {
+            display: flex;
+            height: 100vh; /* Full height for the sidebar */
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f4f4f4;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        }
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0; /* Space between sidebar items */
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #007bff; /* Link color */
+            transition: color 0.3s; /* Smooth transition for hover effect */
+        }
+        .sidebar ul li a:hover {
+            color: #0056b3; /* Darker color on hover */
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px; /* Increased padding for better spacing */
+            background-color: #ffffff; /* White background for main content */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            overflow-y: auto; /* Allow scrolling if content overflows */
+        }
+        h1, h2, h3 {
+            color: #333;
+            margin-bottom: 15px; /* Consistent margin for headings */
+        }
+        form {
+            margin-bottom: 30px; /* Space below the form */
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 12px; /* Increased padding for better touch targets */
+            margin-right: 10px;
+            border: 1px solid #ccc; /* Border for input */
+            border-radius: 4px; /* Rounded corners */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+        }
+        button {
+            padding: 12px 20px; /* Increased padding for button */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker color on hover */
+        }
+        table {
+            width: 100%; /* Full width for tables */
+            border-collapse: collapse; /* Collapse borders */
+            margin-top: 20px; /* Space above tables */
+        }
+        th, td {
+            padding: 12px; /* Padding for table cells */
+            text-align: left;
+            border-bottom: 1px solid #eee; /* Subtle border for separation */
+        }
+        th {
+            background-color: #f1f1f1; /* Light gray for header */
+            color: #333; /* Dark text for header */
+        }
+        tr:hover {
+            background-color: #f9f9f9; /* Highlight row on hover */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px 0; /* Increased padding for list items */
+            border-bottom: 1px solid #eee; /* Subtle border for separation */
+        }
+        li:last-child {
+            border-bottom: none; /* Remove border from last item */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Patient History</h1>
+        <form id="patient-search-form" method="POST">
+            <input type="text" name="search_term" placeholder="Enter Patient ID or Name" required>
+            <button type="submit">Search</button>
+        </form>
+        <div id="results-container">
+            {% if patient %}
+                <h2>Patient Details</h2>
+                <table>
+                    <tr><th>ID</th><td>{{ patient.patientID }}</td></tr>
+                    <tr><th>Name</th><td>{{ patient.patientName }}</td></tr>
+                    <tr><th>Contact</th><td>{{ patient.Contact }}</td></tr>
+                    <tr><th>Email</th><td>{{ patient.Email }}</td></tr>
+                    <tr><th>DOB</th><td>{{ patient.DOB }}</td></tr>
+                </table>
+
+                <h3>Appointments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.appointment_date }}</td>
+                                <td>{{ appointment.doctorID }}</td>
+                                <td>{{ appointment.status }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">No appointments found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h3>Medical Records</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Diagnosis</th>
+            <th>Treatment</th>
+        </tr>
+    </thead>
+    <style>
+        table {
+    width: 100%; /* Full width for tables */
+    border-collapse: separate; /* Use separate borders */
+    border-spacing: 15px; /* Add space between columns */
+    margin-top: 20px; /* Space above tables */
+}
+
+th, td {
+    padding: 12px; /* Padding for table cells */
+    text-align: center;
+    border-bottom: 1px solid #eee; /* Subtle border for separation */
+    background-color: #fff; /* White background for cells */
+}
+
+th {
+    background-color: #f1f1f1; /* Light gray for header */
+    color: #333; /* Dark text for header */
+}
+    </style>
+        <tbody>
+            {% for record in medical_records %}
+                <tr>
+                    <td>{{ record.consultationDate }}</td>
+                    <td>{{ record.diagnosis }}</td>
+                    <td>{{ record.treatment }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>No medical records found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+                {% else %}
+                    <p>No patient found.</p>
+                {% endif %}
+        </div>
+    </div>
+</body>
+</html>

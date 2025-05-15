@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Patient</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Roboto', sans-serif; }
+        .sidebar { 
+            width: 250px; 
+            height: 100vh; 
+            background-color: #1e90ff; /* Changed to blue */
+            color: white; 
+            padding: 20px; 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        .sidebar h2 { margin-bottom: 30px; color: #ffffff; }
+        .sidebar ul { list-style-type: none; padding: 0; }
+        .sidebar ul li { margin-bottom: 15px; }
+        .sidebar ul li a { 
+            color: #ffffff; 
+            text-decoration: none; 
+            transition: background-color 0.3s ease;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sidebar ul li a:hover { 
+            background-color: #4682b4;
+        }
+        .content { 
+            margin-left: 270px; 
+            padding: 40px; 
+            background-color: #f4f7f6; 
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+        .form-container { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); width: 60%; margin: 0 auto; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
+        .submit-btn { background-color: #1e90ff; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease; }
+        .submit-btn:hover { background-color: #4682b4; }
+        .alert { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-error { background-color: #f8d7da; color: #721c24; }
+        .hidden {
+            display: none;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #1e90ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #4682b4;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+        <li><a href="{{ url_for('patients') }}">Patients</a></li>
+    </ul>
+</div>
+<div class="content">
+    <h1>Update Patient Details</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="form-container" id="searchForm">
+        <h3>Search Patient</h3>
+        <div class="form-group">
+            <label for="patient_id">Patient ID:</label>
+            <input type="text" id="patient_id" required>
+        </div>
+        <div class="form-group">
+            <label for="dob">DOB:</label>
+            <input type="date" id="dob" required>
+        </div>
+        <button type="button" class="submit-btn" id="searchBtn">Search</button>
+    </div>
+
+    <div class="form-container hidden" id="updateForm">
+        <h3>Update Patient</h3>
+        <form id="patientUpdateForm">
+            <input type="hidden" id="update_patient_id" name="patient_id">
+            <div class="form-group">
+                <label for="update_patient_name">Name:</label>
+                <input type="text" id="update_patient_name" name="patient_name" required>
+            </div>
+            <div class="form-group">
+                <label for="update_contact">Contact:</label>
+                <input type="text" id="update_contact" name="contact" required>
+            </div>
+            <div class="form-group">
+                <label for="update_email">Email:</label>
+                <input type="email" id="update_email" name="email" required>
+            </div>
+            <button type="submit" class="submit-btn">Update Patient</button>
+        </form>
+    </div>
+    <a href="{{ url_for('index') }}" class="back-link">Back to Dashboard</a>
+</div>
+
+<script src="{{ url_for('static', filename='js/update_patient.js') }}"></script>
+</body>
+</html>

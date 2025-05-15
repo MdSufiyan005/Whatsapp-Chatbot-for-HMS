@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Medical Records Management</h1>
+    </header>
+
+    <!-- Add Medical Record Section -->
+    <section id="add-record">
+        <h2>Add Medical Record</h2>
+        <form id="add-record-form" enctype="multipart/form-data" method="post" action="{{ url_for('add_medical_record') }}">
+            <label for="record-id">Record ID:</label>
+            <input type="number" id="record-id" name="record-id" required>
+
+            <label for="patient-id">Patient ID:</label>
+            <input type="number" id="patient-id" name="patient-id" required>
+
+            <label for="doctor-id">Doctor ID:</label>
+            <input type="text" id="doctor-id" name="doctor-id" required>
+
+            <label for="consultation-date">Consultation Date:</label>
+            <input type="date" id="consultation-date" name="consultation-date" required>
+
+            <label for="diagnosis">Diagnosis:</label>
+            <textarea id="diagnosis" name="diagnosis" rows="3" required></textarea>
+
+            <label for="treatment">Treatment:</label>
+            <textarea id="treatment" name="treatment" rows="3" required></textarea>
+
+            <label for="prescription-photo">Prescription Photo:</label>
+            <input type="file" id="prescription-photo" name="prescription-photo" accept="image/*">
+
+            <button type="submit">Add Record</button>
+        </form>
+    </section>
+
+    <!-- Search and Display Medical Records Section -->
+    <section id="search-records">
+        <h2>Search Medical Records</h2>
+        <input type="text" id="search-record-id" placeholder="Search by Record ID">
+        <input type="text" id="search-patient-id" placeholder="Search by Patient ID">
+        <button id="search-button">Search</button>
+
+        <h3>Medical Records List</h3>
+        <table id="records-table">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Patient ID</th>
+                    <th>Doctor ID</th>
+                    <th>Consultation Date</th>
+                    <th>Diagnosis</th>
+                    <th>Treatment</th>
+                    <th>Prescription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.recordID }}</td>
+                    <td>{{ record.patientID }}</td>
+                    <td>{{ record.doctorID }}</td>
+                    <td>{{ record.consultationDate }}</td>
+                    <td>{{ record.diagnosis }}</td>
+                    <td>{{ record.treatment }}</td>
+                    <td>
+                        {% if record.prescription %}
+                        <a href="{{ url_for('view_prescription', record_id=record.recordID) }}" target="_blank">View</a>
+                        {% else %}
+                        No Prescription
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/medical_records.js') }}"></script>
+</body>
+</html>
